@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/details.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -30,19 +30,22 @@
         </div>
         <div class="menu-container">
             <ul class="navlist-container">
-                <li class="list-item active">Home</li>
+                <a href="/" style="text-decoration: none;">
+                    <li class="list-item active">Home</li>
+                </a>
                 <li class="list-item">About</li>
                 <li class="list-item">Wishlist</li>
             </ul>
             <button class="subscribe-btn">Subscribe</button>
         </div>
     </div>
-   
+
     <!-- ===================== Book list section start ===================== -->
     <div class="book-list-container">
         <div class="books-card">
             <img src="/Assets/book1.jpg" class="book-image" alt="book-cover-image">
-
+        </div>
+        <div class="book-info-container">
             <div class="book-info">
                 <div class="title-id">
                     <h1 class="book-title">Book title</h1>
@@ -51,14 +54,43 @@
                 <p class="author-date">(1940 - 1982)</p>
                 <p class="book-genre">Genre - Fiction - fictoryai</p>
                 <p class="book-id">id: 212343</p>
+
+            </div>
+            <div class="book-info2">
+                <div class="subject-details">
+                    <h4>Subjects: </h4>
+                    <div class="subject-group">
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                        <p class="subject-name">Lorem, ipsum.</p>
+                    </div>
+                </div>
+                <div class="bookshelf-details">
+                    <h4>Bookshel: </h4>
+                    <div class="bookshelf-group">
+                        <p class="bookshelf-name">Lorem, ipsum.</p>
+                        <p class="bookshelf-name">Lorem, ipsum.</p>
+                        <p class="bookshelf-name">Lorem, ipsum.</p>
+                        <p class="bookshelf-name">Lorem, ipsum.</p>
+                        <p class="bookshelf-name">Lorem, ipsum.</p>
+                    </div>
+                </div>
+                <div class="download-details">
+                    <h4>Total Download: </h4>
+                    <p class="download-count"> 2353 <i class="fa-solid fa-download"></i></p>
+                </div>
                 <div class="btn-group">
-                    <button class="view-btn">View details</button>
-                    <button class="cart-btn">Add to cart</button>
-                    <i class="fa-solid fa-heart"></i>
+                    <button class="view-btn">Book details</button>
+                    <button class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>
                 </div>
             </div>
         </div>
-       
+
+
     </div>
     <div>
 

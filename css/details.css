@@ -26,8 +26,8 @@ body {
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 .menu-container {
@@ -79,104 +79,21 @@ body {
 
 }
 
-.hero-container {
-    width: 70vw;
-    margin: 20px auto;
-    padding: 5px;
-    background-color: rgba(175, 175, 172, 0.099);
-    border-radius: 10px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.title-container {
-    text-align: center;
-}
-
-.title-container h1 {
-    font-family: "Patrick Hand SC", serif;
-    font-size: 50px;
-    margin-top: 30px;
-}
-
-.title-container p {
-    font-size: 16px;
-    margin-top: 10px;
-    width: 70%;
-    margin: 16px auto 0px;
-}
-
-.search-main-container {
-    width: 80%;
-    font-family: "Roboto", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 25px;
-    margin: 30px auto 40px auto;
-}
-
-.search-container {
-    width: 25%;
-    position: relative;
-}
-
-.dropdown-container {
-    width: 25%;
-    position: relative;
-    background-color: black;
-    border-radius: 7px;
-    padding: 7px;
-    cursor: pointer;
-}
-
-.fa-magnifying-glass {
-    position: absolute;
-    right: -7px;
-    top: 8px;
-    color: gray;
-}
-
-.fa-caret-down {
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    color: white;
-}
-
-.search-input {
-    width: 100%;
-    border-radius: 7px;
-    border: 1.5px solid black;
-    padding: 7px;
-}
-
-.dropdown-text {
-    color: white;
-    font-weight: 400;
-    font-size: 13px;
-}
-
 .book-list-container {
     width: 70vw;
     margin: 20px auto;
     padding: 5px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 25px;
+    background-color: rgba(175, 175, 172, 0.197);
 }
 
 .books-card {
-    width: 22%;
+    width: 35%;
     position: relative;
-    transition: all 0.7s ease-in-out;
     cursor: pointer;
     padding: 0px;
     margin: 0px;
@@ -189,87 +106,93 @@ body {
     overflow: hidden;
 }
 
-.books-card:hover {
-    transform: scale(1.1);
-    z-index: 20;
 
-}
 
 .book-image {
     width: 100%;
-    height: 280px;
+    height: 480px;
     object-fit: cover;
-    transition: all 0.5s ease-in-out;
-    mix-blend-mode: luminosity;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
-
-.books-card:hover .book-image{
-    mix-blend-mode: normal;
-    opacity: 0.9;
-}
-
-.books-card:hover .book-info {
-    transform: translateY(53px);
-    opacity: 1;
+.book-info-container {
+    width: 60%;
+    height: 100%;
+   
 }
 
 .book-info {
-    width: 180px;
-    position: absolute;
+    position: relative;
     background-color: rgb(255, 255, 255);
-    position: absolute;
     opacity: 1;
     transition: all 0.5s ease-in-out;
     color: rgb(0, 0, 0);
     padding: 16px;
     border-radius: 10px;
     overflow: hidden;
+    margin-top: 5px;
 }
 
-.book-info h1{
+.book-info h1 {
+    font-family: "Patrick Hand SC", serif;
+    font-size: 30px;
+    text-align: center;
+}
+
+.book-info2 {
+    background-color: rgb(255, 255, 255);
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+    color: rgb(0, 0, 0);
+    padding: 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.book-info2 h1 {
     font-family: "Patrick Hand SC", serif;
     font-size: 30px;
     text-align: center;
 }
 
 
-.book-id{
+
+.book-id {
     background-color: black;
     display: inline;
     padding: 3px 5px;
     border-radius: 2px;
     font-size: 8px;
     font-weight: 700;
-    color:white;
+    color: white;
     position: absolute;
     top: 0px;
     left: 0px;
 }
 
-.book-author{
+.book-author {
     font-size: 16px;
     font-weight: 500;
     font-style: italic;
     text-align: center;
 }
 
-.book-genre{
-    font-size: 12px;
-    font-weight: 400;
-    font-style: italic;
-    text-align: center;
-}
-.author-date{
+.book-genre {
     font-size: 12px;
     font-weight: 400;
     font-style: italic;
     text-align: center;
 }
 
-.btn-group{
-  
+.author-date {
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: center;
+}
+
+.btn-group {
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -279,8 +202,8 @@ body {
     padding: 2px;
 }
 
-.view-btn{
-    background-color: white;
+.view-btn {
+    background-color: black;
     border: 1px solid black;
     outline: none;
     padding: 4px 6px;
@@ -288,8 +211,10 @@ body {
     font-size: 11px;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
+    color: white;
 }
-.cart-btn{
+
+.cart-btn {
     background-color: white;
     border: 1px solid black;
     outline: none;
@@ -300,18 +225,61 @@ body {
 
 }
 
-.view-btn:hover, .cart-btn:hover{
+.view-btn:hover{
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease-in-out;
+}
+.cart-btn:hover {
     background-color: black;
     color: white;
     transition: all 0.5s ease-in-out;
 }
 
-.fa-heart{
+.fa-heart {
     color: rgba(73, 69, 69, 0.841);
     mix-blend-mode: normal;
-    font-size: 18px;
-    margin-left: 10px;
+    font-size: 14px;
+    margin-left: 3px;
     transition: all 0.5s ease-in-out;
+}
+
+.subject-group, .bookshelf-group, .download-details{
+    margin: 16px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.subject-name{
+    background-color: black;
+    border: 1px solid black;
+    outline: none;
+    padding: 4px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    color: white;
+    width: 100px;
+    text-align: center;
+    font-style: normal;
+}
+.bookshelf-name{
+    background-color: white;
+    border: 1px solid black;
+    outline: none;
+    padding: 4px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.fa-download{
+    font-size: 12px;
+    color: rgb(0, 0, 0);
 }
 
 /* .fa-heart:hover{
