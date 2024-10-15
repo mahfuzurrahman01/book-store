@@ -110,8 +110,8 @@ body {
 
 .book-image {
     width: 100%;
-    height: 480px;
-    object-fit: cover;
+    height: 560px;
+    
     border-radius: 16px;
 }
 
