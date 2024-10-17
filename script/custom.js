@@ -1,7 +1,7 @@
 
 
 
-async function getData() {
+async function getData(url) {
     console.log(url)
     let loader = '';
     loader = `
@@ -75,28 +75,45 @@ async function getData() {
 const paginationHandleNext = () => {
     pageCount++
     console.log(pageCount)
+    localStorage.setItem("pageCount", JSON.stringify(pageCount));
     document.getElementsByClassName("book-list-container")[0].innerHTML = '';
     document.getElementsByClassName("pagination-main-container")[0].innerHTML = '';
     url = `https://gutendex.com/books/?page=${pageCount}`
     console.log(url)
-    getData()
+    getData(url)
 }
 
 const paginationHandlePrev = () => {
     if (pageCount !== 1) {
         pageCount--
         console.log(pageCount)
+        localStorage.setItem("pageCount", JSON.stringify(pageCount));
         document.getElementsByClassName("book-list-container")[0].innerHTML = '';
         document.getElementsByClassName("pagination-main-container")[0].innerHTML = '';
         url = `https://gutendex.com/books/?page=${pageCount}`
         console.log(url)
-        getData()
+        getData(url)
     } else {
         console.log('already in last page');
     }
 }
 
+const getPageCount =async () => {
+    const pageNum = localStorage.getItem("pageCount");
+    console.log(pageNum)
+    const number = JSON.parse(pageNum)
+    if (!number || pageNum == null) {
+        pageCount = 1;
+        let url = `https://gutendex.com/books/?page=${pageCount}`
+        getData(url)
+    } else {
+        pageCount = number;
+        let url = `https://gutendex.com/books/?page=${pageCount}`
+        getData(url)
+    }
+    
+}
 
-let pageCount = 1;
-let url = `https://gutendex.com/books/?page=${pageCount}`
-getData();
+let pageCount;
+getPageCount()
+
