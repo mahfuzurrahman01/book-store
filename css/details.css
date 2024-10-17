@@ -241,14 +241,14 @@ body {
 .fa-heart {
     color: rgba(255, 0, 0, 0.859);
     mix-blend-mode: normal;
-    font-size: 14px;
+    font-size: 18px;
     margin-left: 3px;
     transition: all 0.5s ease-in-out;
 }
 .fa-heart-crack {
     color: rgba(255, 0, 0, 0.806);
     mix-blend-mode: normal;
-    font-size: 15px;
+    font-size: 18px;
     margin-left: 10px;
     transition: all 0.5s ease-in-out;
 }
@@ -269,7 +269,6 @@ body {
     padding: 4px 6px;
     border-radius: 3px;
     font-size: 11px;
-  
     transition: all 0.5s ease-in-out;
     color: white;
     min-width: 100px;

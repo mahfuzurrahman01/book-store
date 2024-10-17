@@ -322,20 +322,13 @@ body {
 }
 
 .fa-heart {
-    color: rgba(73, 69, 69, 0.841);
     mix-blend-mode: normal;
     font-size: 18px;
     margin-left: 10px;
     transition: all 0.5s ease-in-out;
 }
 
-.fa-heart-crack {
-    color: rgba(73, 69, 69, 0.841);
-    mix-blend-mode: normal;
-    font-size: 28px;
-    margin-left: 10px;
-    transition: all 0.5s ease-in-out;
-}
+
 
 .loader-main-container {
     width: 70vw;

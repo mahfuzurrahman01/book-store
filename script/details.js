@@ -120,6 +120,8 @@ function addToWishList(data) {
     }
 }
 
+// =================== remove from wishlist ============================
+
 function removeFromWishList(data) {
     console.log(data); // Should log the correct data when the button is clicked
     // Add your logic to add the item to the wishlist

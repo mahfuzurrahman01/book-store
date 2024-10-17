@@ -1,27 +1,37 @@
 
 //======================== adding book list to ui ====================
-
+let includedId = false;
 const addingBookListToUi = (arr) => {
+
+    const wishListInStore = localStorage.getItem("wishlist") || "[]";
+    const wishList = JSON.parse(wishListInStore);
+
     let card = '';
     arr.forEach(element => {
+
+        const isInWishlist = wishList.some(book => book.id === element.id);
+
         card += `
-    <div class="books-card">
-        <img src="${element?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
-        <div class="book-info">
-            <div class="title-id">
-                <h1 class="book-title">${element?.title?.slice(0, 30)}...</h1>
+        <div class="books-card">
+            <img src="${element?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
+            <div class="book-info">
+                <div class="title-id">
+                    <h1 class="book-title">${element?.title?.slice(0, 30)}...</h1>
+                </div>
+                <p class="book-author">${element?.authors[0]?.name}</p>
+                <p class="author-date">(${element?.authors[0]?.birth_year} - ${element?.authors[0]?.death_year})</p>
+                <p class="book-genre">Genre - ${element?.subjects[0]}</p>
+                <p class="book-id">ID: ${element?.id}</p>
+                <div class="btn-group">
+                    <a href="details.html?id=${element?.id}"><button class="view-btn">Book details</button></a>
+                   <i class="fa-solid fa-heart" 
+                        style="color: ${isInWishlist ? 'red' : 'gray'}" 
+                        onclick="${isInWishlist ? `removeFromWishList(${JSON.stringify(element?.id)})` : `addToWishList(${JSON.stringify(element?.id)})`}"></i>
+                </div>
             </div>
-            <p class="book-author">${element?.authors[0]?.name}</p>
-            <p class="author-date">(${element?.authors[0]?.birth_year} - ${element?.authors[0]?.death_year})</p>
-            <p class="book-genre">Genre - ${element?.subjects[0]}</p>
-            <p class="book-id">ID: ${element?.id}</p>
-            <div class="btn-group">
-                <a href="details.html?id=${element?.id}"><button class="view-btn">Book details</button></a>
-                <i class="fa-solid fa-heart"></i>
-            </div>
-        </div>
-    </div>`;
+        </div>`;
     });
+
     document.getElementsByClassName("book-list-container")[0].innerHTML = card;
 }
 
@@ -152,6 +162,55 @@ const getSortBooks = async (name) => {
         addingBookListToUi(filteredBooks)
     }
 }
+
+
+
+//  ======================= add To wishlist function =================== 
+// Add to wishlist function
+function addToWishList(id) {
+    console.log(id);
+    // Find the book data by id
+    const book = books.find(book => book.id === parseInt(id));
+    if (!book) {
+        console.error("Book not found");
+        return;
+    }
+    console.log("Adding to wishlist:", book);
+
+    // Add book to wishlist logic here
+    const wishListInStore = localStorage.getItem("wishlist") || "[]";
+    const parsedList = JSON.parse(wishListInStore);
+
+    // Check if the book is already in the wishlist
+    if (!parsedList.some(item => item.id === book.id)) {
+        parsedList.push(book);
+        localStorage.setItem("wishlist", JSON.stringify(parsedList));
+        const name = localStorage.getItem("searchInput") || "";
+        getSortBooks(name)
+    }
+}
+
+// Remove from wishlist function
+function removeFromWishList(id) {
+    // Find the book data by id
+    console.log(id);
+    const book = books.find(book => book.id === parseInt(id));
+    if (!book) {
+        console.error("Book not found");
+        return;
+    }
+    console.log("Removing from wishlist:", book);
+
+    // Remove book from wishlist logic
+    const wishListInStore = localStorage.getItem("wishlist") || "[]";
+    const parsedList = JSON.parse(wishListInStore);
+
+    const updatedList = parsedList.filter(item => item.id !== book.id);
+    localStorage.setItem("wishlist", JSON.stringify(updatedList));
+    const name = localStorage.getItem("searchInput") || "";
+        getSortBooks(name)
+}
+
 
 // ================= this function will get triggered when search input change ====================
 
