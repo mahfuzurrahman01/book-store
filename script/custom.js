@@ -1,4 +1,29 @@
 
+//======================== adding book list to ui ====================
+
+const addingBookListToUi = (arr) => {
+    let card = '';
+    arr.forEach(element => {
+        card += `
+    <div class="books-card">
+        <img src="${element?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
+        <div class="book-info">
+            <div class="title-id">
+                <h1 class="book-title">${element?.title?.slice(0, 30)}...</h1>
+            </div>
+            <p class="book-author">${element?.authors[0]?.name}</p>
+            <p class="author-date">(${element?.authors[0]?.birth_year} - ${element?.authors[0]?.death_year})</p>
+            <p class="book-genre">Genre - ${element?.subjects[0]}</p>
+            <p class="book-id">ID: ${element?.id}</p>
+            <div class="btn-group">
+                <a href="details.html?id=${element?.id}"><button class="view-btn">Book details</button></a>
+                <i class="fa-solid fa-heart"></i>
+            </div>
+        </div>
+    </div>`;
+    });
+    document.getElementsByClassName("book-list-container")[0].innerHTML = card;
+}
 
 
 async function getData(url) {
@@ -25,34 +50,23 @@ async function getData(url) {
 
     document.querySelector(".loader-main-container").innerHTML = loader;
     try {
-        let card = '';
         const response = await fetch(url);
         const data = await response.json();
         const result = data?.results; // Process the data here
+        books = [...books, ...result];
+        // ============== now getting the stored filter text from localStorage ===========
+        const inputText = localStorage.getItem("searchInput");
+        console.log(inputText)
+        if (inputText?.length > 0) {
+            getSortBooks(inputText)
+            inputField.value = inputText;
+        } else {
+            addingBookListToUi(result)
+            inputField.value = "";
+        }
 
-        // Loop through each book and generate HTML
-        result.forEach(element => {
-            card += `
-        <div class="books-card">
-            <img src="${element?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
-            <div class="book-info">
-                <div class="title-id">
-                    <h1 class="book-title">${element?.title}</h1>
-                </div>
-                <p class="book-author">${element?.authors[0]?.name}</p>
-                <p class="author-date">(${element?.authors[0]?.birth_year} - ${element?.authors[0]?.death_year})</p>
-                <p class="book-genre">Genre - ${element?.subjects[0]}</p>
-                <p class="book-id">ID: ${element?.id}</p>
-                <div class="btn-group">
-                    <a href="details.html?id=${element?.id}"><button class="view-btn">Book details</button></a>
-                    <i class="fa-solid fa-heart"></i>
-                </div>
-            </div>
-        </div>`;
-        });
         document.querySelector(".loader-main-container").innerHTML = '';
-        // Set the generated HTML to the book list container
-        document.getElementsByClassName("book-list-container")[0].innerHTML = card;
+
         // now we are adding our pagination 
         let pagination = ` <div class="pagination-container">
         <div onclick="paginationHandlePrev()" class="prev-btn">
@@ -72,7 +86,10 @@ async function getData(url) {
 }
 
 
+// ================== next handle press in pagination =======================//
+
 const paginationHandleNext = () => {
+    localStorage.setItem("searchInput", "");
     pageCount++
     console.log(pageCount)
     localStorage.setItem("pageCount", JSON.stringify(pageCount));
@@ -81,9 +98,13 @@ const paginationHandleNext = () => {
     url = `https://gutendex.com/books/?page=${pageCount}`
     console.log(url)
     getData(url)
+
 }
 
+// ================== previous handle press in pagination =======================//
+
 const paginationHandlePrev = () => {
+    localStorage.setItem("searchInput", "");
     if (pageCount !== 1) {
         pageCount--
         console.log(pageCount)
@@ -98,7 +119,9 @@ const paginationHandlePrev = () => {
     }
 }
 
-const getPageCount =async () => {
+// ====================== this will add our page number from localStorage =================
+
+const getPageCount = async () => {
     const pageNum = localStorage.getItem("pageCount");
     console.log(pageNum)
     const number = JSON.parse(pageNum)
@@ -111,9 +134,37 @@ const getPageCount =async () => {
         let url = `https://gutendex.com/books/?page=${pageCount}`
         getData(url)
     }
-    
+
 }
 
+
+// ================= sort out books ==============================
+
+const getSortBooks = async (name) => {
+    console.log("we are getting from ", name)
+    if (books?.length > 0) {
+
+        const filteredBooks = books.filter((book) => {
+            // Ensure book.title exists before calling toLowerCase
+            return book.title && book.title.toLowerCase().includes(name.toLowerCase());
+        });
+        console.log(filteredBooks)
+        addingBookListToUi(filteredBooks)
+    }
+}
+
+// ================= this function will get triggered when search input change ====================
+
+let inputField = document.getElementById("search");
+// Add event listener for 'change' event
+inputField.addEventListener('input', (event) => {
+    let name = event.target.value;  // This will log the value when it changes
+    localStorage.setItem("searchInput", name);
+    getSortBooks(name)
+});
+
 let pageCount;
-getPageCount()
+let books = [];
+getPageCount();
+
 

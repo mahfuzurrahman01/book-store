@@ -31,6 +31,8 @@ async function getBookDetails(bookId) {
 
     document.querySelector(".loader-main-container").innerHTML = loader;
 
+    let includedId = false;
+
     let cardHTML = ''; // Initialize an empty string to store the card HTML
     console.log('param', bookId);
 
@@ -38,6 +40,15 @@ async function getBookDetails(bookId) {
         const response = await fetch(`https://gutendex.com/books/${bookId}/`);
         const data = await response.json();
         console.log(data)
+
+        const wishlist = localStorage.getItem("wishlist");
+        if (wishlist !== null) {
+            const parsedList = JSON.parse(wishlist);
+            const findItem = parsedList.find(item => item.id == data?.id);
+            if (findItem?.id) {
+                includedId = true;
+            }
+        }
         //============ clear the loader =============
         document.querySelector(".loader-main-container").innerHTML = '';
         // Display the book details
@@ -74,7 +85,10 @@ async function getBookDetails(bookId) {
                         <p class="download-count">${data?.download_count} <i class="fa-solid fa-download"></i></p>
                     </div>
                     <div class="btn-group">
-                        <button class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>
+                        ${includedId ?
+                `<button onclick='removeFromWishList(${JSON.stringify(data)})' class="cart-btn">Remove <i class="fa-solid fa-heart-crack"></i></button>` :
+                `<button onclick='addToWishList(${JSON.stringify(data)})' class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>`
+            }
                     </div>
                 </div>
             </div>`;
@@ -88,6 +102,34 @@ async function getBookDetails(bookId) {
     }
 }
 
+//  ======================= add To wishlist function =================== 
+
+function addToWishList(data) {
+    console.log(data); // Should log the correct data when the button is clicked
+    // Add your logic to add the item to the wishlist
+    const wishListInStore = localStorage.getItem("wishlist");
+    console.log(wishListInStore)
+    if (wishListInStore == null) {
+        const arr = [data];
+        localStorage.setItem("wishlist", JSON.stringify(arr));
+        getBookDetails(data?.id);
+    } else {
+        const newArr = [...wishListInStore, data];
+        localStorage.setItem("wishlist", JSON.stringify(newArr));
+        getBookDetails(data?.id);
+    }
+}
+
+function removeFromWishList(data) {
+    console.log(data); // Should log the correct data when the button is clicked
+    // Add your logic to add the item to the wishlist
+    const wishListInStore = localStorage.getItem("wishlist");
+    console.log(wishListInStore)
+    const parsedList = JSON.parse(wishListInStore)
+    const filteredList = parsedList.filter(item => item.id !== data.id);
+    localStorage.setItem('wishlist', JSON.stringify(filteredList))
+    getBookDetails(data?.id);
+}
 // Fetch and display the book details
 if (bookId) {
     getBookDetails(bookId);
