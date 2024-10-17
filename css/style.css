@@ -185,8 +185,8 @@ body {
     align-items: center;
     padding: 4px;
     border-radius: 8px;
-
     border: 1px solid black;
+    animation: books 0.5s linear;
 }
 
 .books-card:hover {
@@ -205,7 +205,7 @@ body {
 }
 
 
-.books-card:hover .book-image{
+.books-card:hover .book-image {
     mix-blend-mode: normal;
     opacity: 0.9;
 }
@@ -226,6 +226,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
 }
+
 .book-info2 {
     width: 180px;
     position: absolute;
@@ -238,7 +239,7 @@ body {
     overflow: hidden;
 }
 
-.book-info h1{
+.book-info h1 {
     font-family: "Patrick Hand SC", serif;
     font-size: 24px;
     text-align: center;
@@ -246,41 +247,42 @@ body {
 }
 
 
-.book-id{
+.book-id {
     background-color: black;
     display: inline;
     padding: 3px 5px;
     border-radius: 2px;
     font-size: 8px;
     font-weight: 700;
-    color:white;
+    color: white;
     position: absolute;
     top: 0px;
     left: 0px;
 }
 
-.book-author{
+.book-author {
     font-size: 16px;
     font-weight: 500;
     font-style: italic;
     text-align: center;
 }
 
-.book-genre{
-    font-size: 12px;
-    font-weight: 400;
-    font-style: italic;
-    text-align: center;
-}
-.author-date{
+.book-genre {
     font-size: 12px;
     font-weight: 400;
     font-style: italic;
     text-align: center;
 }
 
-.btn-group{
-  
+.author-date {
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    text-align: center;
+}
+
+.btn-group {
+
     margin-top: 10px;
     display: flex;
     flex-direction: row;
@@ -290,7 +292,7 @@ body {
     padding: 2px;
 }
 
-.view-btn{
+.view-btn {
     background-color: white;
     border: 1px solid black;
     outline: none;
@@ -300,7 +302,8 @@ body {
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
-.cart-btn{
+
+.cart-btn {
     background-color: white;
     border: 1px solid black;
     outline: none;
@@ -311,19 +314,167 @@ body {
 
 }
 
-.view-btn:hover, .cart-btn:hover{
+.view-btn:hover,
+.cart-btn:hover {
     background-color: black;
     color: white;
     transition: all 0.5s ease-in-out;
 }
 
-.fa-heart{
+.fa-heart {
     color: rgba(73, 69, 69, 0.841);
     mix-blend-mode: normal;
     font-size: 18px;
     margin-left: 10px;
     transition: all 0.5s ease-in-out;
 }
+
+.loader-main-container {
+    width: 70vw;
+    margin: 5px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.loader-container {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(rgba(17, 16, 16, 0.732), rgb(0, 0, 0));
+    border-radius: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border: 3px dashed black;
+    animation: rotate 3s linear infinite;
+}
+
+.loader {
+    width: 80%;
+    height: 80%;
+    border-radius: 100%;
+    background-color: white;
+    border: 2px dashed black;
+    animation: rotate2 2s linear infinite;
+}
+
+.please-text {
+    font-size: 16px;
+    font-weight: 400;
+    animation: warningText 2s ease-in-out infinite;
+    color: rgb(77, 17, 17);
+}
+
+.pagination-main-container {
+    position: sticky;
+    bottom: 20px;
+    z-index: 20;
+}
+
+.pagination-container {
+    background-color: rgb(255, 255, 255);
+    width: 15vw;
+    height: 60px;
+    margin: 10px auto 30px;
+
+
+    border: 2px solid black;
+    border-radius: 40px;
+    box-shadow: 5px 10px 2px black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prev-btn,
+.next-btn {
+    width: 20%;
+    height: 100%;
+    align-items: center;
+    cursor: pointer;
+}
+
+.next-btn {
+    align-items: center;
+    display: flex;
+    justify-content: left;
+    cursor: pointer;
+}
+
+.prev-btn {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.page-number{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.number{
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.fa-circle-chevron-left,
+.fa-circle-chevron-right {
+    font-size: 30px;
+}
+
+/* ===================this is keyframe for our loader component =========== */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+/* ===================this is keyframe for our books component =========== */
+@keyframes books {
+    from {
+        transform: scale(0.8)
+    }
+
+    to {
+        transform: scale(1.0);
+    }
+}
+
+@keyframes warningText {
+    from {
+        transform: scale(0.8)
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+
+
+
 
 /* .fa-heart:hover{
   color: red;

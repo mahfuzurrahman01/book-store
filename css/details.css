@@ -82,17 +82,19 @@ body {
 .book-list-container {
     width: 70vw;
     margin: 20px auto;
-    padding: 5px;
+    padding: 15px 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 25px;
     background-color: rgba(175, 175, 172, 0.197);
+    border-radius: 10px;
+
 }
 
 .books-card {
-    width: 35%;
+    width: 27%;
     position: relative;
     cursor: pointer;
     padding: 0px;
@@ -101,9 +103,10 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 4px;
+    padding: 10px;
     border-radius: 8px;
     overflow: hidden;
+
 }
 
 
@@ -111,14 +114,13 @@ body {
 .book-image {
     width: 100%;
     height: 560px;
-    
+    object-fit: contain;
     border-radius: 16px;
 }
 
 .book-info-container {
     width: 60%;
     height: 100%;
-   
 }
 
 .book-info {
@@ -215,14 +217,14 @@ body {
 }
 
 .cart-btn {
+    width: 20%;
     background-color: white;
     border: 1px solid black;
     outline: none;
-    padding: 4px 6px;
+    padding: 9px 6px;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 13px;
     cursor: pointer;
-
 }
 
 .view-btn:hover{
@@ -283,6 +285,86 @@ body {
     color: rgb(0, 0, 0);
 }
 
+.loader-main-container {
+    width: 70vw;
+    margin: 5px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.loader-container {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(rgba(17, 16, 16, 0.732), rgb(0, 0, 0));
+    border-radius: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border: 3px dashed black;
+    animation: rotate 3s linear infinite;
+}
+
+.loader {
+    width: 80%;
+    height: 80%;
+    border-radius: 100%;
+    background-color: white;
+    border: 2px dashed black;
+    animation: rotate2 2s linear infinite;
+}
+
+.please-text {
+    font-size: 16px;
+    font-weight: 400;
+    animation: warningText 2s ease-in-out infinite;
+    color: rgb(77, 17, 17);
+}
+
+
 /* .fa-heart:hover{
   color: red;
 } */
+
+/* ===================this is keyframe for our loader component =========== */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate2 {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+/* ===================this is keyframe for our books component =========== */
+@keyframes books {
+    from {
+        transform: scale(0.8)
+    }
+
+    to {
+        transform: scale(1.0);
+    }
+}
+
+@keyframes warningText {
+    from {
+        transform: scale(0.8)
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}

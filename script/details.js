@@ -1,23 +1,48 @@
 
-    function getQueryParam(param) {
-        console.log('param', param);
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-    // Get the book ID from the URL
-    const bookId = getQueryParam('id');
+function getQueryParam(param) {
+    console.log('param', param);
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+// Get the book ID from the URL
+const bookId = getQueryParam('id');
 
-    // Function to fetch and display the book details
-    async function getBookDetails(bookId) {
-        console.log('param', bookId);
-        try {
-            const response = await fetch(`https://gutendex.com/books/${bookId}/`);
-            const data = await response.json();
-            console.log(data)
-            // Display the book details
-            let cardHTML = ''; // Initialize an empty string to store the card HTML
+// Function to fetch and display the book details
+async function getBookDetails(bookId) {
+    let loader = '';
+    loader = `
+           <P class="please-text">Please</P>
+           <div class="loader-container">
+           <div class="loader">
 
-            cardHTML += `
+          </div>
+          </div>
+          <div class="loader-container">
+          <div class="loader">
+          </div>
+          </div>
+          <div class="loader-container">
+         <div class="loader">
+
+          </div>
+          </div>
+          <p class="please-text">Wait!!</p>`
+
+
+    document.querySelector(".loader-main-container").innerHTML = loader;
+
+    let cardHTML = ''; // Initialize an empty string to store the card HTML
+    console.log('param', bookId);
+
+    try {
+        const response = await fetch(`https://gutendex.com/books/${bookId}/`);
+        const data = await response.json();
+        console.log(data)
+        //============ clear the loader =============
+        document.querySelector(".loader-main-container").innerHTML = '';
+        // Display the book details
+
+        cardHTML += `
             <div class="books-card">
                 <img src="${data?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
             </div>
@@ -49,27 +74,24 @@
                         <p class="download-count">${data?.download_count} <i class="fa-solid fa-download"></i></p>
                     </div>
                     <div class="btn-group">
-                        <a href="details.html?id=${data?.id}">
-                            <button class="view-btn">Book details</button>
-                        </a>
                         <button class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>
                     </div>
                 </div>
             </div>`;
-       
+
 
         // Insert the generated HTML into the container
         document.querySelector(".book-list-container").innerHTML = cardHTML;
-            
-        } catch (error) {
-            console.error("Error fetching book details:", error);
-        }
-    }
 
-    // Fetch and display the book details
-    if (bookId) {
-        getBookDetails(bookId);
-    } else {
-        console.error("No book ID found in the URL");
+    } catch (error) {
+        console.error("Error fetching book details:", error);
     }
+}
+
+// Fetch and display the book details
+if (bookId) {
+    getBookDetails(bookId);
+} else {
+    console.error("No book ID found in the URL");
+}
 
