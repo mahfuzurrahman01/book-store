@@ -174,7 +174,7 @@ body {
 }
 
 .books-card {
-    width: 31%;
+    width: 30%;
     position: relative;
     transition: all 0.7s ease-in-out;
     cursor: pointer;

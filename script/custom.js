@@ -28,7 +28,6 @@ async function getData() {
         
         // Set the generated HTML to the book list container
         document.getElementsByClassName("book-list-container")[0].innerHTML = card;
-        console.log(card)
     } catch (error) {
         console.error("Error fetching data:", error);
     }
