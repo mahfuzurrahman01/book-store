@@ -1,4 +1,3 @@
-
 function getQueryParam(param) {
     console.log('param', param);
     const urlParams = new URLSearchParams(window.location.search);
@@ -14,32 +13,28 @@ async function getBookDetails(bookId) {
            <P class="please-text">Please</P>
            <div class="loader-container">
            <div class="loader">
-
-          </div>
-          </div>
-          <div class="loader-container">
-          <div class="loader">
-          </div>
-          </div>
-          <div class="loader-container">
-         <div class="loader">
-
-          </div>
-          </div>
-          <p class="please-text">Wait!!</p>`
-
+           </div>
+           </div>
+           <div class="loader-container">
+           <div class="loader">
+           </div>
+           </div>
+           <div class="loader-container">
+           <div class="loader">
+           </div>
+           </div>
+           <p class="please-text">Wait!!</p>`;
 
     document.querySelector(".loader-main-container").innerHTML = loader;
 
     let includedId = false;
-
     let cardHTML = ''; // Initialize an empty string to store the card HTML
     console.log('param', bookId);
 
     try {
         const response = await fetch(`https://gutendex.com/books/${bookId}/`);
         const data = await response.json();
-        console.log(data)
+        console.log(data);
 
         const wishlist = localStorage.getItem("wishlist");
         if (wishlist !== null) {
@@ -49,10 +44,9 @@ async function getBookDetails(bookId) {
                 includedId = true;
             }
         }
-        //============ clear the loader =============
+       //============ clear the loader =============
         document.querySelector(".loader-main-container").innerHTML = '';
         // Display the book details
-
         cardHTML += `
             <div class="books-card">
                 <img src="${data?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
@@ -87,13 +81,12 @@ async function getBookDetails(bookId) {
                     <div class="btn-group">
                         ${includedId ?
                 `<button onclick='removeFromWishList(${JSON.stringify(data)})' class="cart-btn">Remove <i class="fa-solid fa-heart-crack"></i></button>` :
-                `<button onclick='addToWishList(${JSON.stringify(data)})' class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>`
-            }
+                `<button onclick='addToWishList(${JSON.stringify(data)})' class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>`}
                     </div>
                 </div>
             </div>`;
 
-
+            
         // Insert the generated HTML into the container
         document.querySelector(".book-list-container").innerHTML = cardHTML;
 
@@ -101,41 +94,53 @@ async function getBookDetails(bookId) {
         console.error("Error fetching book details:", error);
     }
 }
-
-//  ======================= add To wishlist function =================== 
-
+// ======================= Add to Wishlist Function ===================
 function addToWishList(data) {
-    console.log(data); // Should log the correct data when the button is clicked
-    // Add your logic to add the item to the wishlist
-    const wishListInStore = localStorage.getItem("wishlist");
-    console.log(wishListInStore)
-    if (wishListInStore == null) {
-        const arr = [data];
-        localStorage.setItem("wishlist", JSON.stringify(arr));
-        getBookDetails(data?.id);
+    let wishListInStore = localStorage.getItem("wishlist");
+
+    if (!wishListInStore) {
+        // If wishlist is empty, create a new array with the book data
+        localStorage.setItem("wishlist", JSON.stringify([data]));
     } else {
-        const newArr = [...wishListInStore, data];
-        localStorage.setItem("wishlist", JSON.stringify(newArr));
-        getBookDetails(data?.id);
+        // Parse the stored wishlist array
+        let parsedList = JSON.parse(wishListInStore);
+
+        // Check if the book is already in the wishlist
+        const isBookInWishlist = parsedList.some(item => item.id === data.id);
+
+        if (!isBookInWishlist) {
+            // Add the new book to the parsed array
+            parsedList.push(data);
+            localStorage.setItem("wishlist", JSON.stringify(parsedList));
+        }
+    }
+
+    // Refresh the book details to reflect the updated wishlist
+    getBookDetails(data.id);
+}
+
+// =================== Remove from Wishlist Function ====================
+function removeFromWishList(data) {
+    console.log('Removed from wishlist:', data); // Log the book data when clicked
+
+    // Get the wishlist from localStorage
+    const wishListInStore = localStorage.getItem("wishlist");
+
+    if (wishListInStore) {
+        const parsedList = JSON.parse(wishListInStore);
+        const filteredList = parsedList.filter(item => item.id !== data.id);
+
+        // Update the wishlist in localStorage
+        localStorage.setItem('wishlist', JSON.stringify(filteredList));
+
+        // Refresh the book details to reflect the updated wishlist
+        getBookDetails(data.id);
     }
 }
 
-// =================== remove from wishlist ============================
-
-function removeFromWishList(data) {
-    console.log(data); // Should log the correct data when the button is clicked
-    // Add your logic to add the item to the wishlist
-    const wishListInStore = localStorage.getItem("wishlist");
-    console.log(wishListInStore)
-    const parsedList = JSON.parse(wishListInStore)
-    const filteredList = parsedList.filter(item => item.id !== data.id);
-    localStorage.setItem('wishlist', JSON.stringify(filteredList))
-    getBookDetails(data?.id);
-}
 // Fetch and display the book details
 if (bookId) {
     getBookDetails(bookId);
 } else {
     console.error("No book ID found in the URL");
 }
-

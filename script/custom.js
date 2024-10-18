@@ -1,6 +1,5 @@
 
 //======================== adding book list to ui ====================
-let includedId = false;
 const addingBookListToUi = (arr) => {
 
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
@@ -166,10 +165,10 @@ const getSortBooks = async (name) => {
 
 
 //  ======================= add To wishlist function =================== 
-// Add to wishlist function
+
 function addToWishList(id) {
     console.log(id);
-    // Find the book data by id
+
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
         console.error("Book not found");
@@ -177,11 +176,10 @@ function addToWishList(id) {
     }
     console.log("Adding to wishlist:", book);
 
-    // Add book to wishlist logic here
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);
 
-    // Check if the book is already in the wishlist
+
     if (!parsedList.some(item => item.id === book.id)) {
         parsedList.push(book);
         localStorage.setItem("wishlist", JSON.stringify(parsedList));
@@ -190,9 +188,9 @@ function addToWishList(id) {
     }
 }
 
-// Remove from wishlist function
+// ===============================Remove from wishlist function=================
 function removeFromWishList(id) {
-    // Find the book data by id
+
     console.log(id);
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
@@ -201,7 +199,6 @@ function removeFromWishList(id) {
     }
     console.log("Removing from wishlist:", book);
 
-    // Remove book from wishlist logic
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);
 
