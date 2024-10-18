@@ -146,18 +146,22 @@ const getPageCount = async () => {
 
 }
 
+let noBookMessage = `<h3>No book found for this Title/Name!!</h3>`
 
 // ================= sort out books ==============================
 
 const getSortBooks = async (name) => {
     console.log("we are getting from ", name)
     if (books?.length > 0) {
-
+        document.querySelector(".loader-main-container").innerHTML = '';
         const filteredBooks = books.filter((book) => {
             // Ensure book.title exists before calling toLowerCase
             return book.title && book.title.toLowerCase().includes(name.toLowerCase());
         });
         console.log(filteredBooks)
+        if (filteredBooks.length == 0) {
+            document.querySelector(".loader-main-container").innerHTML = noBookMessage;
+        }
         addingBookListToUi(filteredBooks)
     }
 }
@@ -205,7 +209,7 @@ function removeFromWishList(id) {
     const updatedList = parsedList.filter(item => item.id !== book.id);
     localStorage.setItem("wishlist", JSON.stringify(updatedList));
     const name = localStorage.getItem("searchInput") || "";
-        getSortBooks(name)
+    getSortBooks(name)
 }
 
 
