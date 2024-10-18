@@ -15,11 +15,11 @@ const addingBookListToUi = (arr) => {
             <img src="${element?.formats['image/jpeg']}" class="book-image" alt="book-cover-image">
             <div class="book-info">
                 <div class="title-id">
-                    <h1 class="book-title">${element?.title?.slice(0, 30)}...</h1>
+                    <h1 class="book-title">${!element?.title ? '--' : element?.title?.slice(0, 30)}...</h1>
                 </div>
-                <p class="book-author">${element?.authors[0]?.name}</p>
-                <p class="author-date">(${element?.authors[0]?.birth_year} - ${element?.authors[0]?.death_year})</p>
-                <p class="book-genre">Genre - ${element?.subjects[0]}</p>
+                <p class="book-author">${!element?.authors[0]?.name ? "--" : element?.authors[0]?.name}</p>
+                <p class="author-date">(${!element?.authors[0]?.birth_year ? "--" : element?.authors[0]?.birth_year} - ${!element?.authors[0]?.death_year ? '--' : element?.authors[0]?.death_year})</p>
+                <p class="book-genre">Genre - ${!element?.subjects[0] ? "--" : element?.subjects[0]}</p>
                 <p class="book-id">ID: ${element?.id}</p>
                 <div class="btn-group">
                     <a href="details.html?id=${element?.id}"><button class="view-btn">Book details</button></a>
@@ -174,7 +174,7 @@ const getSortBooks = async (name) => {
         console.log(filteredBooks)
         if (filteredBooks.length == 0) {
             document.querySelector(".warning-main-container").innerHTML = noBookMessage;
-        } 
+        }
         addingBookListToUi(filteredBooks)
     }
 }
@@ -183,9 +183,12 @@ const getSortBooks = async (name) => {
 
 function searchWithKeyword() {
     document.querySelector(".warning-main-container").innerHTML = "";
-    let inputKeyword = localStorage?.getItem("searchInput")
-    let url = `https://gutendex.com/books?search=${inputKeyword}`;
+    let inputKeyword = localStorage?.getItem("searchInput");
+    // ========== this will help us to change our search keyword (according to the api document) ================
+    let remakeInput = inputKeyword.replace(" ", "%20");
+    let url = `https://gutendex.com/books?search=${remakeInput}`;
     console.log(inputKeyword)
+    localStorage.setItem("searchInput", "");
     getData(url);
 }
 

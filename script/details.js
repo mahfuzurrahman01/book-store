@@ -56,8 +56,8 @@ async function getBookDetails(bookId) {
                     <div class="title-id">
                         <h1 class="book-title">${data?.title}</h1>
                     </div>
-                    <p class="book-author">${data?.authors[0]?.name}</p>
-                    <p class="author-date">(${data?.authors[0]?.birth_year} - ${data?.authors[0]?.death_year})</p>
+                    <p class="book-author">${!data?.authors[0]?.name ? "--" : data?.authors[0]?.name}</p>
+                    <p class="author-date">(${!data?.authors[0]?.birth_year ? "--" : data?.authors[0]?.birth_year} - ${!data?.authors[0]?.death_year ? '--' : data?.authors[0]?.death_year})</p>
                     <p class="book-genre">Genre - ${data?.subjects[0]}</p>
                     <p class="book-id">ID: ${data?.id}</p>
                 </div>
