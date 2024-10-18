@@ -339,6 +339,15 @@ body {
     gap: 8px;
 }
 
+.warning-main-container {
+    width: 70vw;
+    margin: 5px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
 .loader-container {
     width: 30px;
     height: 30px;
@@ -429,6 +438,26 @@ body {
 .fa-circle-chevron-left,
 .fa-circle-chevron-right {
     font-size: 30px;
+}
+
+.warning-no-book{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.search-input-button{
+    height: 35px;
+    border-radius: 7px;
+    padding: 5px 29px;
+    border-style: none;
+    outline-style: none;
+    background-color: black;
+    color: white;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
 }
 
 /* ===================this is keyframe for our loader component =========== */

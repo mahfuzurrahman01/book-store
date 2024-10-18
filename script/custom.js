@@ -1,7 +1,7 @@
 
 //======================== adding book list to ui ====================
 const addingBookListToUi = (arr) => {
-
+    console.log(arr)
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const wishList = JSON.parse(wishListInStore);
 
@@ -62,11 +62,18 @@ async function getData(url) {
         const response = await fetch(url);
         const data = await response.json();
         const result = data?.results; // Process the data here
+        console.log(result);
+        if (result.length == 0 && url?.split("search")?.length == 2) {
+            document.querySelector(".warning-main-container").innerHTML = noBookMessageInStore;
+            document.querySelector(".loader-main-container").innerHTML = "";
+            return;
+        }
         books = [...books, ...result];
         // ============== now getting the stored filter text from localStorage ===========
         const inputText = localStorage.getItem("searchInput");
         console.log(inputText)
         if (inputText?.length > 0) {
+            document.querySelector(".warning-main-container").innerHTML = "";
             getSortBooks(inputText)
             inputField.value = inputText;
         } else {
@@ -146,7 +153,13 @@ const getPageCount = async () => {
 
 }
 
-let noBookMessage = `<h3>No book found for this Title/Name!!</h3>`
+let noBookMessage = `<div class="warning-no-book"><h3>No book found for this Title/Name. In this page!!</h3>
+<small>You can search in whole store with this keyword you input!</small>
+<button onclick="searchWithKeyword()" class="search-input-button">Search</button>
+</div>`
+
+let noBookMessageInStore = `<div class="warning-no-book"><h3>Sorry No book found for this Title/Name!!</h3>
+</div>`
 
 // ================= sort out books ==============================
 
@@ -160,13 +173,21 @@ const getSortBooks = async (name) => {
         });
         console.log(filteredBooks)
         if (filteredBooks.length == 0) {
-            document.querySelector(".loader-main-container").innerHTML = noBookMessage;
-        }
+            document.querySelector(".warning-main-container").innerHTML = noBookMessage;
+        } 
         addingBookListToUi(filteredBooks)
     }
 }
 
+// ======================== search with keyword =====================
 
+function searchWithKeyword() {
+    document.querySelector(".warning-main-container").innerHTML = "";
+    let inputKeyword = localStorage?.getItem("searchInput")
+    let url = `https://gutendex.com/books?search=${inputKeyword}`;
+    console.log(inputKeyword)
+    getData(url);
+}
 
 //  ======================= add To wishlist function =================== 
 
@@ -188,6 +209,7 @@ function addToWishList(id) {
         parsedList.push(book);
         localStorage.setItem("wishlist", JSON.stringify(parsedList));
         const name = localStorage.getItem("searchInput") || "";
+        document.querySelector(".warning-main-container").innerHTML = "";
         getSortBooks(name)
     }
 }
@@ -209,6 +231,7 @@ function removeFromWishList(id) {
     const updatedList = parsedList.filter(item => item.id !== book.id);
     localStorage.setItem("wishlist", JSON.stringify(updatedList));
     const name = localStorage.getItem("searchInput") || "";
+    document.querySelector(".warning-main-container").innerHTML = "";
     getSortBooks(name)
 }
 
@@ -218,6 +241,7 @@ function removeFromWishList(id) {
 let inputField = document.getElementById("search");
 // Add event listener for 'change' event
 inputField.addEventListener('input', (event) => {
+    document.querySelector(".warning-main-container").innerHTML = "";
     let name = event.target.value;  // This will log the value when it changes
     localStorage.setItem("searchInput", name);
     getSortBooks(name)

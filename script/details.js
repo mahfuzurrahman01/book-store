@@ -44,7 +44,7 @@ async function getBookDetails(bookId) {
                 includedId = true;
             }
         }
-       //============ clear the loader =============
+        //============ clear the loader =============
         document.querySelector(".loader-main-container").innerHTML = '';
         // Display the book details
         cardHTML += `
@@ -71,22 +71,19 @@ async function getBookDetails(bookId) {
                     <div class="bookshelf-details">
                         <h4>Bookshelf: </h4>
                         <div class="bookshelf-group">
-                            ${data.bookshelves.map(bookshelf => `<p class="bookshelf-name">${bookshelf}</p>`).join('')}
+                                 ${data.bookshelves.map(bookshelf => `<p class="bookshelf-name">${bookshelf}</p>`).join('')}
                         </div>
+                        
                     </div>
                     <div class="download-details">
                         <h4>Total Download: </h4>
                         <p class="download-count">${data?.download_count} <i class="fa-solid fa-download"></i></p>
                     </div>
-                    <div class="btn-group">
-                        ${includedId ?
-                `<button onclick='removeFromWishList(${JSON.stringify(data)})' class="cart-btn">Remove <i class="fa-solid fa-heart-crack"></i></button>` :
-                `<button onclick='addToWishList(${JSON.stringify(data)})' class="cart-btn">Add to wishlist <i class="fa-solid fa-heart"></i></button>`}
-                    </div>
+                    
                 </div>
             </div>`;
 
-            
+
         // Insert the generated HTML into the container
         document.querySelector(".book-list-container").innerHTML = cardHTML;
 
@@ -94,49 +91,7 @@ async function getBookDetails(bookId) {
         console.error("Error fetching book details:", error);
     }
 }
-// ======================= Add to Wishlist Function ===================
-function addToWishList(data) {
-    let wishListInStore = localStorage.getItem("wishlist");
 
-    if (!wishListInStore) {
-        // If wishlist is empty, create a new array with the book data
-        localStorage.setItem("wishlist", JSON.stringify([data]));
-    } else {
-        // Parse the stored wishlist array
-        let parsedList = JSON.parse(wishListInStore);
-
-        // Check if the book is already in the wishlist
-        const isBookInWishlist = parsedList.some(item => item.id === data.id);
-
-        if (!isBookInWishlist) {
-            // Add the new book to the parsed array
-            parsedList.push(data);
-            localStorage.setItem("wishlist", JSON.stringify(parsedList));
-        }
-    }
-
-    // Refresh the book details to reflect the updated wishlist
-    getBookDetails(data.id);
-}
-
-// =================== Remove from Wishlist Function ====================
-function removeFromWishList(data) {
-    console.log('Removed from wishlist:', data); // Log the book data when clicked
-
-    // Get the wishlist from localStorage
-    const wishListInStore = localStorage.getItem("wishlist");
-
-    if (wishListInStore) {
-        const parsedList = JSON.parse(wishListInStore);
-        const filteredList = parsedList.filter(item => item.id !== data.id);
-
-        // Update the wishlist in localStorage
-        localStorage.setItem('wishlist', JSON.stringify(filteredList));
-
-        // Refresh the book details to reflect the updated wishlist
-        getBookDetails(data.id);
-    }
-}
 
 // Fetch and display the book details
 if (bookId) {
