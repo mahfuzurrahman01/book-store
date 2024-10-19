@@ -2,7 +2,7 @@
 //======================== adding book list to ui ====================
 let wishListInStore = localStorage.getItem("wishlist") || "[]";
 let wishList = JSON.parse(wishListInStore);
-console.log(wishList?.length)
+//console.log(wishList?.length)
 
 const addingBookListToUi = (arr) => {
     let card = '';
@@ -57,14 +57,14 @@ const sortUiAgain = () => {
 //  ======================= add To wishlist function =================== 
 
 function addToWishList(id) {
-    console.log(id);
+    //console.log(id);
 
     const book = wishList.find(book => book.id === parseInt(id));
     if (!book) {
-        console.error("Book not found");
+        //console.error("Book not found");
         return;
     }
-    console.log("Adding to wishlist:", book);
+    //console.log("Adding to wishlist:", book);
 
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);
@@ -81,13 +81,13 @@ function addToWishList(id) {
 // ===============================Remove from wishlist function=================
 function removeFromWishList(id) {
 
-    console.log(id);
+    //console.log(id);
     const book = wishList.find(book => book.id === parseInt(id));
     if (!book) {
-        console.error("Book not found");
+        //console.error("Book not found");
         return;
     }
-    console.log("Removing from wishlist:", book);
+    //console.log("Removing from wishlist:", book);
 
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);

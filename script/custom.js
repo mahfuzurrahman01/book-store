@@ -1,7 +1,7 @@
 
 //======================== adding book list to ui ====================
 const addingBookListToUi = (arr) => {
-    console.log(arr)
+    //console.log(arr)
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const wishList = JSON.parse(wishListInStore);
 
@@ -36,7 +36,7 @@ const addingBookListToUi = (arr) => {
 
 
 async function getData(url) {
-    console.log(url)
+    //console.log(url)
     let loader = '';
     loader = `
            <P class="please-text">Please</P>
@@ -62,7 +62,7 @@ async function getData(url) {
         const response = await fetch(url);
         const data = await response.json();
         const result = data?.results; // Process the data here
-        console.log(result);
+        //console.log(result);
         if (result.length == 0 && url?.split("search")?.length == 2) {
             document.querySelector(".warning-main-container").innerHTML = noBookMessageInStore;
             document.querySelector(".loader-main-container").innerHTML = "";
@@ -78,7 +78,7 @@ async function getData(url) {
         localStorage.setItem('allBooks', JSON.stringify(result))
         // ============== now getting the stored filter text from localStorage ===========
         const inputText = localStorage.getItem("searchInput");
-        console.log(inputText)
+        //console.log(inputText)
         if (inputText?.length > 0) {
             document.querySelector(".warning-main-container").innerHTML = "";
             getSortBooks(inputText)
@@ -110,7 +110,7 @@ async function getData(url) {
             document.getElementsByClassName("pagination-main-container")[0].innerHTML = "";
         }
     } catch (error) {
-        console.error("Error fetching data:", error);
+        //console.error("Error fetching data:", error);
         document.querySelector(".warning-main-container").innerHTML = connectionError;
         document.querySelector(".loader-main-container").innerHTML = '';
     }
@@ -125,12 +125,12 @@ const paginationHandleNext = () => {
     document.querySelector(".dropdown-text").textContent = "Filter by Genre";
     localStorage.setItem("searchInput", "");
     pageCount++
-    console.log(pageCount)
+    //console.log(pageCount)
     localStorage.setItem("pageCount", JSON.stringify(pageCount));
     document.getElementsByClassName("book-list-container")[0].innerHTML = '';
     document.getElementsByClassName("pagination-main-container")[0].innerHTML = '';
     url = `https://gutendex.com/books/?page=${pageCount}`
-    console.log(url)
+    //console.log(url)
     getData(url)
 
 }
@@ -144,15 +144,15 @@ const paginationHandlePrev = () => {
     localStorage.setItem("searchInput", "");
     if (pageCount !== 1) {
         pageCount--
-        console.log(pageCount)
+        //console.log(pageCount)
         localStorage.setItem("pageCount", JSON.stringify(pageCount));
         document.getElementsByClassName("book-list-container")[0].innerHTML = '';
         document.getElementsByClassName("pagination-main-container")[0].innerHTML = '';
         url = `https://gutendex.com/books/?page=${pageCount}`
-        console.log(url)
+        //console.log(url)
         getData(url)
     } else {
-        console.log('already in last page');
+        //console.log('already in last page');
     }
 }
 
@@ -160,7 +160,7 @@ const paginationHandlePrev = () => {
 
 const getPageCount = async () => {
     const filterInput = localStorage.getItem("selected-genre");
-    console.log(filterInput)
+    //console.log(filterInput)
     if (filterInput) {
         pageCount = 1;
         localStorage.setItem("pageCount", JSON.stringify(1))
@@ -172,7 +172,7 @@ const getPageCount = async () => {
         return
     }
     const pageNum = localStorage.getItem("pageCount");
-    console.log(pageNum)
+    //console.log(pageNum)
     const number = JSON.parse(pageNum)
     if (!number || pageNum == null) {
         pageCount = 1;
@@ -214,7 +214,7 @@ const getSortBooks = async (name) => {
             // Ensure book.title exists before calling toLowerCase
             return book.title && book.title.toLowerCase().includes(name.toLowerCase());
         });
-        console.log(filteredBooks)
+        ////console.log(filteredBooks)
         if (filteredBooks.length == 0) {
             document.querySelector(".warning-main-container").innerHTML = noBookMessage;
         }
@@ -232,7 +232,7 @@ function searchWithKeyword() {
     // ========== this will help us to change our search keyword (according to the api document) ================
     let remakeInput = inputKeyword.replace(" ", "%20");
     let url = `https://gutendex.com/books?search=${remakeInput}`;
-    console.log(inputKeyword)
+    //console.log(inputKeyword)
     // localStorage.setItem("searchInput", "");
     getData(url);
 }
@@ -240,15 +240,15 @@ function searchWithKeyword() {
 //  ======================= add To wishlist function =================== 
 
 function addToWishList(id) {
-    console.log(id);
+    //console.log(id);
     const localStoreData = localStorage.getItem("allBooks");
     const books = JSON.parse(localStoreData);
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
-        console.error("Book not found");
+        //console.error("Book not found");
         return;
     }
-    console.log("Adding to wishlist:", book);
+    //console.log("Adding to wishlist:", book);
 
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);
@@ -267,13 +267,13 @@ function addToWishList(id) {
 function removeFromWishList(id) {
     const localStoreData = localStorage.getItem("allBooks");
     const books = JSON.parse(localStoreData);
-    console.log(id);
+    //console.log(id);
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
-        console.error("Book not found");
+        //console.error("Book not found");
         return;
     }
-    console.log("Removing from wishlist:", book);
+    //console.log("Removing from wishlist:", book);
 
     const wishListInStore = localStorage.getItem("wishlist") || "[]";
     const parsedList = JSON.parse(wishListInStore);
@@ -307,7 +307,7 @@ window.addEventListener('click', function (event) {
 dropdownItems.forEach(item => {
     item.addEventListener('click', (event) => {
         event.preventDefault(); // Prevents the default link behavior
-        console.log(item?.textContent)
+        //console.log(item?.textContent)
         localStorage.setItem("selected-genre", item?.textContent);
         if (item?.textContent) {
             document.getElementsByClassName("book-list-container")[0].innerHTML = '';

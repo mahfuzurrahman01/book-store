@@ -1,5 +1,5 @@
 function getQueryParam(param) {
-    console.log('param', param);
+    //console.log('param', param);
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
@@ -29,12 +29,12 @@ async function getBookDetails(bookId) {
 
     let includedId = false;
     let cardHTML = ''; // Initialize an empty string to store the card HTML
-    console.log('param', bookId);
+    //console.log('param', bookId);
 
     try {
         const response = await fetch(`https://gutendex.com/books/${bookId}/`);
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
 
         const wishlist = localStorage.getItem("wishlist");
         if (wishlist !== null) {
@@ -88,7 +88,7 @@ async function getBookDetails(bookId) {
         document.querySelector(".book-list-container").innerHTML = cardHTML;
 
     } catch (error) {
-        console.error("Error fetching book details:", error);
+        //console.error("Error fetching book details:", error);
     }
 }
 
@@ -97,5 +97,5 @@ async function getBookDetails(bookId) {
 if (bookId) {
     getBookDetails(bookId);
 } else {
-    console.error("No book ID found in the URL");
+    //console.error("No book ID found in the URL");
 }
