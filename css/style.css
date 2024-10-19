@@ -397,7 +397,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    text-align: center;
 }
 
 .loader-container {
@@ -510,7 +510,11 @@ body {
     color: white;
     transition: 0.5s ease-in-out;
     cursor: pointer;
+    margin-top: 5px;
 }
+
+
+
 
 /* ===================this is keyframe for our loader component =========== */
 @keyframes rotate {
@@ -563,6 +567,80 @@ body {
         transform: scale(1.2);
     }
 }
+
+
+/* ========== Responsive Styles for tablet Phones (480px and below) ========== */
+
+@media (max-width: 825px) {
+    .navbar-container {
+        width: 80vw;
+    }
+    .logo {
+        margin-top: 2px;
+        width: 50px;
+        height: 60px;
+    }
+    .subscribe-btn {
+        width: 110px;
+        height: 28px; 
+    }
+    
+    .title-container h1 {
+        font-size:40px; 
+        line-height: 30px;
+    }
+    
+
+    .search-main-container {
+        width: 100%;
+        margin: 20px auto 10px auto;
+    }
+    .search-container {
+        width: 40%;
+    }
+
+    .dropdown-container {
+        width: 40%;
+    }
+
+    .dropdown-text {
+        font-size: 14px;
+    }
+
+    .pagination-main-container {
+        position: sticky;
+        bottom: 40px;
+        z-index: 40;
+    }
+    
+    .pagination-container {
+        background-color: rgb(255, 255, 255);
+        width: 30vw;
+        height: 50px;
+    }
+    
+    .book-list-container {
+        width: 95vw;
+        margin: 5px auto;
+    }
+    
+    .books-card {
+        width: 35%;
+        
+    }
+
+    .dropdown-menu {
+        max-width: 55vw;
+        bottom: -50px;
+    }
+
+    .dropdown-item{
+        width: 80px;
+        font-size: 11px;
+     }
+
+}
+
 
 /* ========== Responsive Styles for Mobile Phones (480px and below) ========== */
 @media (max-width: 480px) {
@@ -660,6 +738,3 @@ body {
 
 
 
-/* .fa-heart:hover{
-  color: red;
-} */
