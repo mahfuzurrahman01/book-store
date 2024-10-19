@@ -27,8 +27,8 @@ body {
 
 .logo {
     margin-top: 5px;
-    width: 70px;
-    height: 80px;
+    width: 60px;
+    height: 70px;
 }
 
 .menu-container {
@@ -223,6 +223,12 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 25px;
+}
+
+.filter-message-container{
+    margin: 15px auto;
+    display: flex;
+    width: 70vw;
 }
 
 .books-card {
@@ -511,6 +517,10 @@ body {
     transition: 0.5s ease-in-out;
     cursor: pointer;
     margin-top: 5px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 

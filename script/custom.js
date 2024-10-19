@@ -68,6 +68,12 @@ async function getData(url) {
             document.querySelector(".loader-main-container").innerHTML = "";
             return;
         }
+        let selectedGenre = localStorage.getItem('selected-genre')
+        if (selectedGenre) {
+            document.querySelector(".filter-message-container").innerHTML = backTo;
+        } else {
+            document.querySelector(".filter-message-container").innerHTML = "";
+        }
 
         localStorage.setItem('allBooks', JSON.stringify(result))
         // ============== now getting the stored filter text from localStorage ===========
@@ -98,9 +104,15 @@ async function getData(url) {
             <i class="fa-solid fa-circle-chevron-right"></i>
         </div>
         </div>`
-        document.getElementsByClassName("pagination-main-container")[0].innerHTML = pagination;
+        if (!selectedGenre) {
+            document.getElementsByClassName("pagination-main-container")[0].innerHTML = pagination;
+        }else {
+            document.getElementsByClassName("pagination-main-container")[0].innerHTML = "";
+        }
     } catch (error) {
         console.error("Error fetching data:", error);
+        document.querySelector(".warning-main-container").innerHTML = connectionError;
+        document.querySelector(".loader-main-container").innerHTML = '';
     }
 }
 
@@ -108,6 +120,9 @@ async function getData(url) {
 // ================== next handle press in pagination =======================//
 
 const paginationHandleNext = () => {
+    localStorage.setItem("selected-genre", "");
+    document.querySelector(".filter-message-container").innerHTML = "";
+    document.querySelector(".dropdown-text").textContent = "Filter by Genre";
     localStorage.setItem("searchInput", "");
     pageCount++
     console.log(pageCount)
@@ -123,6 +138,9 @@ const paginationHandleNext = () => {
 // ================== previous handle press in pagination =======================//
 
 const paginationHandlePrev = () => {
+    document.querySelector(".filter-message-container").innerHTML = "";
+    localStorage.setItem("selected-genre", "");
+    document.querySelector(".dropdown-text").textContent = "Filter by Genre";
     localStorage.setItem("searchInput", "");
     if (pageCount !== 1) {
         pageCount--
@@ -141,6 +159,18 @@ const paginationHandlePrev = () => {
 // ====================== this will add our page number from localStorage =================
 
 const getPageCount = async () => {
+    const filterInput = localStorage.getItem("selected-genre");
+    console.log(filterInput)
+    if (filterInput) {
+        pageCount = 1;
+        localStorage.setItem("pageCount", JSON.stringify(1))
+        let url = `https://gutendex.com/books?topic=${filterInput}`
+        document.querySelector(".dropdown-text").textContent = filterInput;
+        localStorage.setItem("pageCount", JSON.stringify(1));
+        pageCount = 1;
+        getData(url)
+        return
+    }
     const pageNum = localStorage.getItem("pageCount");
     console.log(pageNum)
     const number = JSON.parse(pageNum)
@@ -161,12 +191,21 @@ let noBookMessage = `<div class="warning-no-book"><h3>No book found for this Tit
 <button onclick="searchWithKeyword()" class="search-input-button">Search</button>
 </div>`
 
+let backTo = `<div class="warning-no-book">
+<button onclick="backToFirstScreen()" class="search-input-button">Back to All Books</button>
+</div>`
 let noBookMessageInStore = `<div class="warning-no-book"><h3>Sorry No book found for this Title/Name!!</h3>
 </div>`
+let connectionError = `<div class="warning-no-book"><h3>Something went wrong!!</h3>
+<small>Please check your internet connection!</small>
+</div>`
+
+
 
 // ================= sort out books ==============================
 
 const getSortBooks = async (name) => {
+
     const localStoreData = localStorage.getItem("allBooks");
     const books = JSON.parse(localStoreData);
     if (books?.length > 0) {
@@ -187,12 +226,14 @@ const getSortBooks = async (name) => {
 
 function searchWithKeyword() {
     document.querySelector(".warning-main-container").innerHTML = "";
+    document.querySelector(".dropdown-text").textContent = "Filter by Genre";
+    localStorage.setItem("selected-genre", "");
     let inputKeyword = localStorage?.getItem("searchInput");
     // ========== this will help us to change our search keyword (according to the api document) ================
     let remakeInput = inputKeyword.replace(" ", "%20");
     let url = `https://gutendex.com/books?search=${remakeInput}`;
     console.log(inputKeyword)
-    localStorage.setItem("searchInput", "");
+    // localStorage.setItem("searchInput", "");
     getData(url);
 }
 
@@ -261,15 +302,20 @@ window.addEventListener('click', function (event) {
     }
 });
 
+// ==================== this function will search with genre =========================
+
 dropdownItems.forEach(item => {
     item.addEventListener('click', (event) => {
-
         event.preventDefault(); // Prevents the default link behavior
         console.log(item?.textContent)
+        localStorage.setItem("selected-genre", item?.textContent);
         if (item?.textContent) {
             document.getElementsByClassName("book-list-container")[0].innerHTML = '';
             localStorage.setItem("searchInput", "");
+            pageCount = 1;
+            localStorage.setItem("pageCount", JSON.stringify(1))
             inputField.value = "";
+            document.querySelector(".dropdown-text").textContent = item?.textContent;
             let url = `https://gutendex.com/books?topic=${item.textContent}`
             getData(url)
         }
@@ -277,6 +323,13 @@ dropdownItems.forEach(item => {
     });
 });
 
+// ======================== this function will remove All the filter ======================= 
+function backToFirstScreen() {
+    localStorage.setItem("searchInput", "");
+    localStorage.setItem("selected-genre", "");
+    document.querySelector(".dropdown-text").textContent = "Filter by Genre";
+    getPageCount();
+}
 
 // ================= this function will get triggered when search input change ====================
 
@@ -290,7 +343,6 @@ inputField.addEventListener('input', (event) => {
 });
 
 let pageCount;
-
 let dropDownState = false;
 getPageCount();
 
