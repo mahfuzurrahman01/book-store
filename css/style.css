@@ -26,14 +26,16 @@ body {
 }
 
 .logo {
+    margin-top: 5px;
     width: 70px;
-    height: 70px;
+    height: 80px;
 }
 
 .menu-container {
     flex: 3;
     display: flex;
     align-items: center;
+
 }
 
 .navlist-container {
@@ -90,6 +92,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .title-container {
@@ -104,7 +107,6 @@ body {
 
 .title-container p {
     font-size: 16px;
-    margin-top: 10px;
     width: 70%;
     margin: 16px auto 0px;
 }
@@ -124,6 +126,7 @@ body {
 .search-container {
     width: 25%;
     position: relative;
+
 }
 
 .dropdown-container {
@@ -163,40 +166,49 @@ body {
 }
 
 .dropdown-menu {
-    background-color: rgb(239, 232, 232);
-    padding: 25px 30px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px 20px;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 5px; 
     flex-wrap: wrap;
     max-width: 25vw;
-    border-radius: 40px;
+    border-radius: 20px;
     border: 2px solid black;
     box-shadow: 5px 20px black;
-    display: none;
+    opacity: 0;  
     z-index: 40;
-    animation:  dropdownItemsAnimation 0.7s ease-in;
-    transition: all 1s ease-in-out;
+    transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    transform: scale(0.8);
+    display: flex;
+    visibility: hidden; 
+    position: absolute;
+    bottom: -22%;
 }
 
 .dropdown-menu.show {
-        display: flex;
+    opacity: 1;           
+    transform: scale(1);
+    display: flex;  
+    visibility: visible;   
 }
 
 .dropdown-item{
-   text-decoration: none;
-   background-color: rgb(255, 255, 255);
-   color: black;
-   padding: 2px 4px;
-   border-radius: 5px;
-   width: 100px;
-   text-align: center;
-   border: 1px solid black;
-   transition: all 0.5s ease-in-out;
-   animation: dropdownItemsAnimation 0.5s ease-in;
-}
+    text-decoration: none;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding: 2px 4px;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid black;
+    transition: all 0.5s ease-in-out;
+    animation: dropdownItemsAnimation 0.5s ease-in;
+    font-size: 13px;
+ }
 
-.dropdown-item:hover{
+/* Hover effect for dropdown items */
+.dropdown-item:hover {
     background-color: black;
     color: white;
 }
@@ -204,7 +216,7 @@ body {
 
 .book-list-container {
     width: 70vw;
-    margin: 20px auto;
+    margin: 10px auto 20px auto;
     padding: 5px;
     display: flex;
     justify-content: center;
@@ -419,7 +431,7 @@ body {
 .pagination-main-container {
     position: sticky;
     bottom: 20px;
-    z-index: 20;
+    z-index: 40;
 }
 
 .pagination-container {
@@ -552,7 +564,99 @@ body {
     }
 }
 
+/* ========== Responsive Styles for Mobile Phones (480px and below) ========== */
+@media (max-width: 480px) {
+    .navbar-container {
+        width: 90vw;
+    }
+    .logo {
+        margin-top: 2px;
+        width: 40px;
+        height: 50px;
+    }
+    .subscribe-btn {
+        width: 110px;
+        height: 25px; 
+    }
+    .navlist-container {
+        width:60%;
+    }
+    .title-container h1 {
+        font-family: "Patrick Hand SC", serif;
+        font-size: 30px;
+        margin-top: 80px;
+        line-height: 30px;
+    }
+    .title-container p {
+        font-size: 13px;
+        width: 90%;
+        margin: 10px auto 0px;
+    }
 
+    .search-main-container {
+        width: 100%;
+        margin: 20px auto 10px auto;
+    }
+
+
+    .search-container {
+        width: 40%;
+        
+    }
+    .dropdown-container {
+        width: 40%;
+
+    }
+
+    .dropdown-text {
+      
+        font-size: 14px;
+    }
+
+    .pagination-main-container {
+        position: sticky;
+        bottom: 40px;
+        z-index: 40;
+    }
+    
+    .pagination-container {
+        background-color: rgb(255, 255, 255);
+        width: 65vw;
+        height: 45px;
+    }
+    
+    .prev-btn,
+    .next-btn {
+        width: 20%;
+        height: 100%;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .book-list-container {
+        width: 95vw;
+        margin: 5px auto;
+       
+    }
+    
+    .books-card {
+        width: 65%;
+        
+    }
+
+    .dropdown-menu {
+        max-width: 65vw;
+        bottom: 85px;
+    }
+
+    .dropdown-item{
+        width: 80px;
+        font-size: 11px;
+     }
+    
+
+    
+}
 
 
 
