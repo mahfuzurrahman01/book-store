@@ -68,7 +68,8 @@ async function getData(url) {
             document.querySelector(".loader-main-container").innerHTML = "";
             return;
         }
-        books = [...books, ...result];
+
+        localStorage.setItem('allBooks', JSON.stringify(result))
         // ============== now getting the stored filter text from localStorage ===========
         const inputText = localStorage.getItem("searchInput");
         console.log(inputText)
@@ -77,7 +78,9 @@ async function getData(url) {
             getSortBooks(inputText)
             inputField.value = inputText;
         } else {
-            addingBookListToUi(result)
+            const localStoreData = localStorage.getItem("allBooks");
+            const booksArr = JSON.parse(localStoreData)
+            addingBookListToUi(booksArr)
             inputField.value = "";
         }
 
@@ -164,7 +167,8 @@ let noBookMessageInStore = `<div class="warning-no-book"><h3>Sorry No book found
 // ================= sort out books ==============================
 
 const getSortBooks = async (name) => {
-    console.log("we are getting from ", name)
+    const localStoreData = localStorage.getItem("allBooks");
+    const books = JSON.parse(localStoreData);
     if (books?.length > 0) {
         document.querySelector(".loader-main-container").innerHTML = '';
         const filteredBooks = books.filter((book) => {
@@ -196,7 +200,8 @@ function searchWithKeyword() {
 
 function addToWishList(id) {
     console.log(id);
-
+    const localStoreData = localStorage.getItem("allBooks");
+    const books = JSON.parse(localStoreData);
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
         console.error("Book not found");
@@ -219,7 +224,8 @@ function addToWishList(id) {
 
 // ===============================Remove from wishlist function=================
 function removeFromWishList(id) {
-
+    const localStoreData = localStorage.getItem("allBooks");
+    const books = JSON.parse(localStoreData);
     console.log(id);
     const book = books.find(book => book.id === parseInt(id));
     if (!book) {
@@ -239,6 +245,39 @@ function removeFromWishList(id) {
 }
 
 
+// ================= this function will open or close the dropdown ====================
+const dropdownItems = document.querySelectorAll('.dropdown-item');
+let dropdownMenu = document.querySelector(".dropdown-menu");
+
+function openDropdownMenu() {
+    dropdownMenu.classList.toggle('show');
+}
+
+// Close the dropdown when clicking outside of it
+window.addEventListener('click', function (event) {
+    const dropdownContainer = document.querySelector('.dropdown-container');
+    if (!dropdownContainer.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.remove('show');
+    }
+});
+
+dropdownItems.forEach(item => {
+    item.addEventListener('click', (event) => {
+
+        event.preventDefault(); // Prevents the default link behavior
+        console.log(item?.textContent)
+        if (item?.textContent) {
+            document.getElementsByClassName("book-list-container")[0].innerHTML = '';
+            localStorage.setItem("searchInput", "");
+            inputField.value = "";
+            let url = `https://gutendex.com/books?topic=${item.textContent}`
+            getData(url)
+        }
+        dropdownMenu.classList.remove('show'); // Close the dropdown after selection
+    });
+});
+
+
 // ================= this function will get triggered when search input change ====================
 
 let inputField = document.getElementById("search");
@@ -251,7 +290,9 @@ inputField.addEventListener('input', (event) => {
 });
 
 let pageCount;
-let books = [];
+
+let dropDownState = false;
 getPageCount();
 
 
+// children,fiction,horror,Scientists,Conflict ,Domestic ,Tragedies, love, family, drama
