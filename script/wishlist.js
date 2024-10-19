@@ -3,7 +3,13 @@
 let wishListInStore = localStorage.getItem("wishlist") || "[]";
 let wishList = JSON.parse(wishListInStore);
 //console.log(wishList?.length)
-
+if(wishList?.length == 0) {
+    let noBookMessage = `<div class="warning-no-book"><h3>No book added in wishlist!!</h3>
+<small>Please add some!</small>
+<a href="index.html" onclick="searchWithKeyword()" class="search-input-button">Go home</a>
+</div>`
+document.querySelector(".warning-main-container").innerHTML = noBookMessage;
+}
 const addingBookListToUi = (arr) => {
     let card = '';
     arr.forEach(element => {
